@@ -1,5 +1,5 @@
 import {React,useState,useEffect} from 'react';
-import { View, Text, StyleSheet,Pressable,TextInput,TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet,Pressable,TextInput,TouchableOpacity,Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Alert from 'react-native-alert';
@@ -24,12 +24,16 @@ const MyComponent = () => {
       const otpData = {
           number:number        
       };
+      const sendData = {
+          number:number,
+          screen:"Login"
+      }
       axios.post('http://localhost:3000/login',otpData).then((response)=>{
       console.log(response);
       setNumber("");
       setUserName("");
       setPassword("");
-      navigation.navigate("otp",{data:otpData});
+      navigation.navigate("otp",{data:sendData});
     })
     .catch((error)=>{
       console.log("error",error);
@@ -45,9 +49,9 @@ const MyComponent = () => {
   return (
     <View style={styles.container}>
      <View style = {{justifyContent:'center', alignItems:'center'}}>
-          <Text style={{marginTop:40,fontSize:30,fontWeight:'bold',color:'black'}}>
-                OS-CODE
-            </Text>
+          
+            <Image source={'https://www.oscode.co.in/assets/img/logo.webp'} style={{marginTop:40 ,width:200,height:200}}>
+            </Image>
             <Text style={{marginTop:10,fontSize:25,fontWeight:'bold',color:'black'}}>
                 LOGIN
             </Text>
@@ -80,7 +84,7 @@ const MyComponent = () => {
       />
         </View>
       <View style={{justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
-      <TouchableOpacity onPress={handleSignUp}style={{width:300,height:50,marginTop:100,justifyContent:'center',backgroundColor:'#e84371',alignItems:'center',borderRadius:50}}>
+      <TouchableOpacity onPress={handleSignUp}style={{width:300,height:50,marginTop:100,justifyContent:'center',backgroundColor:'black',alignItems:'center',borderRadius:50}}>
           <Text style={{color:'white',fontSize:14,fontWeight:'bold'}}>
               Log in
           </Text>
@@ -88,7 +92,7 @@ const MyComponent = () => {
       <Text style={{marginTop:10,fontWeight:'bold'}}>
         Already Have An Account? <Pressable onPress={()=>{
             navigation.navigate('Register');
-        }}> <Text style={{color:'#e84371'}}>
+        }}> <Text style={{color:'#04c8ff'}}>
             Sign up
         </Text>
         </Pressable>

@@ -81,8 +81,12 @@ const MyComponent = () => {
         <NavigationContainer>
         <Stack.Navigator>
         <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
+
         <Stack.Screen name="Main" component={BottomTabs} options={{headerShown:false}}/>
-       <Stack.Screen name="Info" component={InfoScreen} options={{headerShown:false}}/>
+
+        <Stack.Screen name="Info" component={InfoScreen} options={{headerShown:false}}/>
+
+
         <Stack.Screen name="otp" component={OtpScreen} options={{headerShown:false}}/>
         <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown:false}}/>
         </Stack.Navigator>    

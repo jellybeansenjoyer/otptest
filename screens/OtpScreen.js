@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { View, Text, StyleSheet,Pressable,TextInput ,TouchableOpacity} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -45,16 +45,44 @@ const MyComponent = ({route}) => {
           const otpData = {
               number:data.number        
           };
-          axios.post('http://localhost:3000/signup',otpData).then((response)=>{
+          if(data.screen!=='Login'){
+            axios.post('http://localhost:3000/signup',otpData).then((response)=>{
+                console.log(response);
+              })
+              .catch((error)=>{
+                console.log("error",error);
+              });
+          }else{
+            axios.post('http://localhost:3000/login',otpData).then((response)=>{
           console.log(response);
         })
         .catch((error)=>{
           console.log("error",error);
-        })
+        });
+          }
+          
         }catch(err){
           console.log(err);
         }
       };
+
+  const [timeInSeconds, setTimeInSeconds] = useState(120);
+  
+  useEffect(() => {
+    
+    if (timeInSeconds > 0) {
+      const timer = setInterval(() => {
+        setTimeInSeconds((prevTime) => prevTime - 1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [timeInSeconds]);
+
+  // Format the remaining time as minutes and seconds
+  const minutes = Math.floor(timeInSeconds / 60);
+  const seconds = timeInSeconds % 60;
+
 
     return (
     <View style={styles.container}>
@@ -109,17 +137,24 @@ alignItems: 'center'}} >
         style={styles.textbox} maxLength={1} keyboardType='numeric'>
         </TextInput>
     </View>
-    <TouchableOpacity onPress={handleVerification} style={{ alignSelf:'center',width:300,height:50,marginTop:50,justifyContent:'center',backgroundColor:'#e84371',alignItems:'center',borderRadius:50}}>
+    <TouchableOpacity onPress={handleVerification} style={{ alignSelf:'center',width:300,height:50,marginTop:50,justifyContent:'center',backgroundColor:'black',alignItems:'center',borderRadius:50}}>
           <Text style={{color:'white',fontSize:14,fontWeight:'bold'}}>
               Verify OTP
           </Text>
       </TouchableOpacity>
     <View style={{marginTop:40,alignItems:'center',justifyContent:'center'}}>
-        <Text style={{fontWeight:'bold'}}>Did'nt get it? <Pressable onPress={handleSignUp}><Text style={{color:'#e84371'}}>
+        <Text style={{fontWeight:'bold'}}>Did'nt get it? <Pressable onPress={()=>{
+            handleSignUp()
+            setTimeInSeconds(120);
+            }} disabled={timeInSeconds===0?false:true}><Text style={{color:timeInSeconds===0?'#04c8ff':'gray'}}>
             Resend
             </Text>
             </Pressable>
-            </Text>
+        </Text>
+        
+    <Text style={{color:'black'}}>
+        {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
+      </Text>
     </View>
     </View>
   );

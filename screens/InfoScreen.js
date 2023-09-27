@@ -221,7 +221,7 @@ const MyComponent = () => {
         value={otherSite}
       />
 
-    <TouchableOpacity onPress={sendData} style={{width:320,height:50,marginTop:20,marginBottom:20,justifyContent:'center',backgroundColor:'#e84371',alignItems:'center',borderRadius:50}}>
+    <TouchableOpacity onPress={sendData} style={{width:320,height:50,marginTop:20,marginBottom:20,justifyContent:'center',backgroundColor:'black',alignItems:'center',borderRadius:50}}>
           <Text style={{color:'white',fontSize:14,fontWeight:'bold'}}>
               Submit
           </Text>

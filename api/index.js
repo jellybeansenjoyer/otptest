@@ -5,9 +5,10 @@ const mongoose = require('mongoose');
 const twilio = require('twilio');
 const otp = require('./models/otp.js');
 const Student = require('./models/student.js');
-const Event = require('./models/event.js')
+const Event = require('./models/event.js');
+const yt = require('./models/yt');
 const accountSid = 'AC4bc5962457645eeb1f150b9fd8e08a11';
-const authToken = '95e0f992d76b91b89acb63b7aaad880a';
+const authToken = 'ccc1b77ed733311eba1105237c6c7e2d';
 const client = twilio(accountSid,authToken);
 
 const app = express();
@@ -104,9 +105,6 @@ app.post('/signup',async(req,res)=>{
         if(existingUser){
             return res.status(400).json({message:"User with the same number already exists"});
         }
-
-        
-
         let digits = "0123456789";
         OTP = '';
         for(let i=0;i<4;i++){
@@ -259,6 +257,28 @@ app.post('/events', async (req, res) => {
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Error updating user bio' });
+    }
+  });
+  app.post('/youtube', async (req, res) => {
+    try {
+      const { name, image, description, url } = req.body;
+      const newYouTubeEntry = new yt({ name, image, description, url });
+      const savedEntry = await newYouTubeEntry.save();
+      res.json(savedEntry);
+    } catch (error) {
+      console.error('Error creating YouTube entry:', error);
+      res.status(500).json({ error: 'Failed to create YouTube entry' });
+    }
+  });
+
+  app.get('/youtube', async (req, res) => {
+    try {
+      const allYouTubeEntries = await yt.find();
+      
+      res.json(allYouTubeEntries);
+    } catch (error) {
+      console.error('Error fetching YouTube entries:', error);
+      res.status(500).json({ error: 'Failed to fetch YouTube entries' });
     }
   });
 
