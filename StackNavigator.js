@@ -80,9 +80,10 @@ const MyComponent = () => {
     return (
         <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
 
+        <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
         <Stack.Screen name="Main" component={BottomTabs} options={{headerShown:false}}/>
+
 
         <Stack.Screen name="Info" component={InfoScreen} options={{headerShown:false}}/>
 

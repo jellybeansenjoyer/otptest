@@ -4,6 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const MyComponent = ({route}) => {
     const [myOtp,setMyOtp] = useState(['','','','']);
@@ -20,7 +22,7 @@ const MyComponent = ({route}) => {
             number:data.number
         };
         try{
-        axios.post('http://localhost:3000/verify',otpdata).then((response)=>{
+        axios.post('https://oscode-backend-service.onrender.com/verify',otpdata).then((response)=>{
 
             if(response.data.verified===true){
                 if(response.data.token!==undefined){
@@ -46,14 +48,14 @@ const MyComponent = ({route}) => {
               number:data.number        
           };
           if(data.screen!=='Login'){
-            axios.post('http://localhost:3000/signup',otpData).then((response)=>{
+            axios.post('https://oscode-backend-service.onrender.com/signup',otpData).then((response)=>{
                 console.log(response);
               })
               .catch((error)=>{
                 console.log("error",error);
               });
           }else{
-            axios.post('http://localhost:3000/login',otpData).then((response)=>{
+            axios.post('https://oscode-backend-service.onrender.com/login',otpData).then((response)=>{
           console.log(response);
         })
         .catch((error)=>{
@@ -85,7 +87,7 @@ const MyComponent = ({route}) => {
 
 
     return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
     <Pressable onPress={()=>{
         navigation.navigate('Register');
     }}style = {
@@ -146,22 +148,19 @@ alignItems: 'center'}} >
         <Text style={{fontWeight:'bold'}}>Did'nt get it? <Pressable onPress={()=>{
             handleSignUp()
             setTimeInSeconds(120);
-            }} disabled={timeInSeconds===0?false:true}><Text style={{color:timeInSeconds===0?'#04c8ff':'gray'}}>
-            Resend
-            </Text>
+            }} disabled={timeInSeconds===0?false:true}><Text style={{color:timeInSeconds===0?'#04c8ff':'gray'}}>Resend</Text>
             </Pressable>
         </Text>
         
-    <Text style={{color:'black'}}>
-        {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
-      </Text>
+    <Text style={{color:'black'}}>{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}</Text>
     </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    marginTop:20,
     flex: 1,
   },
   textbox:{

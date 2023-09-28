@@ -2,7 +2,6 @@ import {React,useState,useEffect} from 'react';
 import { View, Text, StyleSheet,Pressable,TextInput,TouchableOpacity,Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import Alert from 'react-native-alert';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 const MyComponent = () => {
@@ -28,7 +27,7 @@ const MyComponent = () => {
           number:number,
           screen:"Login"
       }
-      axios.post('http://localhost:3000/login',otpData).then((response)=>{
+      axios.post('https://oscode-backend-service.onrender.com/login',otpData).then((response)=>{
       console.log(response);
       setNumber("");
       setUserName("");
@@ -50,7 +49,7 @@ const MyComponent = () => {
     <View style={styles.container}>
      <View style = {{justifyContent:'center', alignItems:'center'}}>
           
-            <Image source={'https://www.oscode.co.in/assets/img/logo.webp'} style={{marginTop:40 ,width:200,height:200}}>
+            <Image source={'https://kinsta.com/wp-content/uploads/2020/08/tiger-jpg.jpg'} style={{marginTop:40 ,width:200,height:200}}>
             </Image>
             <Text style={{marginTop:10,fontSize:25,fontWeight:'bold',color:'black'}}>
                 LOGIN
@@ -89,14 +88,13 @@ const MyComponent = () => {
               Log in
           </Text>
       </TouchableOpacity>
-      <Text style={{marginTop:10,fontWeight:'bold'}}>
-        Already Have An Account? <Pressable onPress={()=>{
-            navigation.navigate('Register');
-        }}> <Text style={{color:'#04c8ff'}}>
-            Sign up
-        </Text>
+      <View style={{flexDirection:'row',gap:4,marginTop:10}}>
+      <Text style={{fontWeight:'bold'}}>Already Have An Account?</Text>
+        <Pressable onPress={()=>{navigation.navigate('Register');}}>
+        <Text style={{color:'#04c8ff',fontWeight:'bold'}}>Sign up</Text>
         </Pressable>
-      </Text>
+      </View>
+      
       </View>
     </View>
   );

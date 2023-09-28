@@ -1,6 +1,5 @@
 import React,{useState} from 'react';
 import { View, Text, StyleSheet, Platform ,Button,Picker,TextInput ,ScrollView,TouchableOpacity} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker'
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -39,7 +38,7 @@ const MyComponent = () => {
             insta:insta,
             others:otherSite
         }
-      axios.post('http://localhost:3000/sendInfo',data).then((response)=>{
+      axios.post('https://oscode-backend-service.onrender.com/sendInfo',data).then((response)=>{
       console.log(response);
       setPhone("");
       setBio("");

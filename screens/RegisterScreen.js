@@ -4,6 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView } from 'react-native-gesture-handler';
 const MyComponent = () => {
   
   const navigation = useNavigation();
@@ -19,7 +21,7 @@ const MyComponent = () => {
         number:number,
         screen:"Register"        
     };
-      axios.post('http://localhost:3000/signup',otpData).then((response)=>{
+      axios.post('https://oscode-backend-service.onrender.com/signup',otpData).then((response)=>{
       console.log(response);
       setNumber("");
       setUsername("");
@@ -34,13 +36,13 @@ const MyComponent = () => {
     }
   };  
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
         <Pressable onPress={()=>{
           navigation.navigate('Login');
         }} style = {
     {width: 40,
     height: 40,
-    marginTop:20,
     marginLeft:20,
     borderColor:'gray',
     borderWidth:1,
@@ -51,7 +53,7 @@ const MyComponent = () => {
         <Ionicons name="chevron-back" size={24} color="black" />
         </Pressable>
         <View style = {{justifyContent:'center', alignItems:'center'}}>
-        <Image source={'https://www.oscode.co.in/assets/img/logo.webp'} style={{marginTop:20 ,width:200,height:200}}>
+        <Image source={'https://www.oscode.co.in/assets/img/logo.webp'} style={{marginTop:10 ,width:200,height:200}}>
             </Image>
             <Text style={{marginTop:10,fontSize:25,fontWeight:'bold',color:'black'}}>
                 SIGN UP
@@ -90,16 +92,15 @@ const MyComponent = () => {
               Sign up
           </Text>
       </TouchableOpacity>
-      <Text style={{marginTop:10,fontWeight:'bold'}}>
-        Already Have An Account? <Pressable onPress={()=>{
-            navigation.navigate('Login');
-        }}> <Text style={{color:'#04c8ff'}}>
-            Log in
-        </Text>
+      <View style={{flexDirection:'row',gap:4,marginTop:10}}>
+      <Text style={{fontWeight:'bold'}}>Already Have An Account?</Text>
+        <Pressable onPress={()=>{navigation.navigate('Login');}}>
+        <Text style={{color:'#04c8ff',fontWeight:'bold'}}>Login</Text>
         </Pressable>
-      </Text>
       </View>
-    </View>
+      </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
