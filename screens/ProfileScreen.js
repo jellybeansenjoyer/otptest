@@ -43,7 +43,7 @@ const MyComponent = () => {
     const data = {
       "bio":bio
     }
-    axios.put(`https://oscode-backend-service.onrender.com/users/${userId}/update-bio`,data).then((res)=>{
+    axios.put(`http://localhost:3000/users/${userId}/update-bio`,data).then((res)=>{
       setUserData(res.data);
     }).catch((err)=>{
       console.log(err);
@@ -51,7 +51,7 @@ const MyComponent = () => {
   }
   useEffect(()=>{
     const getUserData = (userId)=>{
-        axios.get(`https://oscode-backend-service.onrender.com/users/${userId}`).then((response)=>{
+        axios.get(`http://localhost:3000/users/${userId}`).then((response)=>{
           setUserData(response.data);
         }).catch((err)=>{
           console.log(err);

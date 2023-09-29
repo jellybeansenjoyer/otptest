@@ -32,7 +32,7 @@ const MyComponent = () => {
           number:number,
           screen:"Login"
       }
-      axios.post('https://oscode-backend-service.onrender.com/login',otpData).then((response)=>{
+      axios.post('http://localhost:3000/login',otpData).then((response)=>{
       console.log(response);
       setNumber("");
       setUserName("");

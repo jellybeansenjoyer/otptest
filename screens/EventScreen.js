@@ -7,7 +7,7 @@ const MyComponent = () => {
   const [events,setEvents] = useState([]); 
   useEffect(()=>{
     const fetchData = ()=>{
-      axios.get('https://oscode-backend-service.onrender.com/events').then((response)=>{
+      axios.get('http://localhost:3000/events').then((response)=>{
           setEvents(response.data);
       }).catch((err)=>{
         console.log(err);

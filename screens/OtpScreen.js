@@ -24,7 +24,7 @@ const MyComponent = ({route}) => {
             number:data.number
         };
         try{
-        axios.post('https://oscode-backend-service.onrender.com/verify',otpdata).then((response)=>{
+        axios.post('http://localhost:3000/verify',otpdata).then((response)=>{
 
             if(response.data.verified===true){
                 console.log(response.data.token);
@@ -70,14 +70,14 @@ const MyComponent = ({route}) => {
               number:data.number        
           };
           if(data.screen!=='Login'){
-            axios.post('https://oscode-backend-service.onrender.com/signup',otpData).then((response)=>{
+            axios.post('http://localhost:3000/signup',otpData).then((response)=>{
                 console.log(response);
               })
               .catch((error)=>{
                 console.log("error",error);
               });
           }else{
-            axios.post('https://oscode-backend-service.onrender.com/login',otpData).then((response)=>{
+            axios.post('http://localhost:3000/login',otpData).then((response)=>{
             setStudId(response.data._id);
             console.log(response.data);
         })

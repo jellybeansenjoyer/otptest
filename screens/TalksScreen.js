@@ -7,7 +7,7 @@ const MyComponent = () => {
   const [videos,setVideos] = useState([]); 
   useEffect(()=>{
     const fetchData = ()=>{
-      axios.get('https://oscode-backend-service.onrender.com/youtube').then((response)=>{
+      axios.get('http://localhost:3000/youtube').then((response)=>{
           setVideos(response.data);
       }).catch((err)=>{
         console.log(err);

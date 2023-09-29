@@ -8,7 +8,7 @@ const Student = require('./models/student.js');
 const Event = require('./models/event.js');
 const yt = require('./models/yt');
 const accountSid = 'AC4bc5962457645eeb1f150b9fd8e08a11';
-const authToken = 'ccc1b77ed733311eba1105237c6c7e2d';
+const authToken = 'daa32fc1c28fef149054c1468b648580';
 const client = twilio(accountSid,authToken);
 
 const app = express();

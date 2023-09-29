@@ -22,7 +22,7 @@ const MyComponent = () => {
         screen:"Register",
         username:username        
     };
-      axios.post('https://oscode-backend-service.onrender.com/signup',otpData).then((response)=>{
+      axios.post('http://localhost:3000/signup',otpData).then((response)=>{
       console.log(response);
       setNumber("");
       setUsername("");
