@@ -142,6 +142,7 @@ const MyComponent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:'white'
   },  
   overlayingView: {
     justifyContent:'center',

@@ -1,14 +1,18 @@
 import {React,useState,useEffect} from 'react';
-import { View, Text, StyleSheet,Pressable,TextInput,TouchableOpacity,Image} from 'react-native';
+import { View, Text, StyleSheet,Pressable,TextInput,TouchableOpacity,Image,Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+
 const MyComponent = () => {
+  const navigation = useNavigation();
   useEffect(()=>{
     const checkLoginStatus = async ()=>{
       try{
-      const token = await AsyncStorage("AuthToken");
+
+        const token = await AsyncStorage.getItem("AuthToken");
+
         if(token){
             navigation.replace("Main");
         }
@@ -18,6 +22,7 @@ const MyComponent = () => {
     };
   checkLoginStatus();
   },[]);
+
   const handleSignUp = ()=>{
     try{
       const otpData = {
@@ -35,21 +40,34 @@ const MyComponent = () => {
       navigation.navigate("otp",{data:sendData});
     })
     .catch((error)=>{
+      showAlert();
       console.log("error",error);
     })
     }catch(err){
       console.log(err);
     }
   };  
-  const navigation = useNavigation();
     const [number,setNumber] = useState('');
     const [username,setUserName] = useState('');
     const [password,setPassword] = useState('');
+    const showAlert = () => {
+      Alert.alert(
+        'Login Failed',
+        "Could'nt send otp",
+        [
+          {
+            text: 'OK',
+            onPress: () => console.log('OK Pressed'),
+          },
+        ],
+        { cancelable: false }
+      );
+    };
   return (
     <View style={styles.container}>
      <View style = {{justifyContent:'center', alignItems:'center'}}>
           
-            <Image source={'https://kinsta.com/wp-content/uploads/2020/08/tiger-jpg.jpg'} style={{marginTop:40 ,width:200,height:200}}>
+            <Image source={require('../oscode.png')} style={{marginTop:120 ,width:200,height:200}}>
             </Image>
             <Text style={{marginTop:10,fontSize:25,fontWeight:'bold',color:'black'}}>
                 LOGIN
@@ -65,7 +83,7 @@ const MyComponent = () => {
         value={number}
         placeholder="Enter phone here"
       />
-      <TextInput
+      {/* <TextInput
         style={styles.input}
         onChangeText={(text)=>{
             setUserName(text);
@@ -80,10 +98,10 @@ const MyComponent = () => {
         }}
         value={password}
         placeholder="Password"
-      />
+      /> */}
         </View>
       <View style={{justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
-      <TouchableOpacity onPress={handleSignUp}style={{width:300,height:50,marginTop:100,justifyContent:'center',backgroundColor:'black',alignItems:'center',borderRadius:50}}>
+      <TouchableOpacity onPress={handleSignUp}style={{width:300,height:50,marginTop:20,justifyContent:'center',backgroundColor:'black',alignItems:'center',borderRadius:50}}>
           <Text style={{color:'white',fontSize:14,fontWeight:'bold'}}>
               Log in
           </Text>
@@ -102,7 +120,8 @@ const MyComponent = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    backgroundColor:'white',
+    flex: 1,
   },
   input:{
     borderColor: 'gray',

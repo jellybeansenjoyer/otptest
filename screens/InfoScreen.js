@@ -1,10 +1,14 @@
-import React,{useState} from 'react';
-import { View, Text, StyleSheet, Platform ,Button,Picker,TextInput ,ScrollView,TouchableOpacity} from 'react-native';
+import React,{useState,useContext,useEffect} from 'react';
+import { View, Text, StyleSheet, Platform ,Button,Picker,TextInput ,ScrollView,TouchableOpacity,Pressable} from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import jwt_decode from 'jwt-decode';
+import {StudentType} from '../studentContext';
+
 const MyComponent = () => {
     const navigation = useNavigation();
+    const {studId,setStudId} = useContext(StudentType);
     const [selectedValue, setSelectedValue] = useState('Option 1');
     const [firstName,setFirstName] = useState('');
     const [lastName,setLastName] = useState('');
@@ -21,7 +25,15 @@ const MyComponent = () => {
     const [github,setGithub] = useState('');
     const [insta,setInsta] = useState('');
     const [otherSite,setOtherSite] = useState('');
-    
+    useEffect(()=>{
+      const fetchUsers = async ()=>{
+          const token = await AsyncStorage.getItem("AuthToken");
+          const decodedToken = jwt_decode(token);
+          const userId = decodedToken.studentId;
+          setStudId(userId);
+      }
+      fetchUsers();
+    },[]);
     const sendData = ()=>{
         const data =  {
             name:name,
@@ -38,7 +50,8 @@ const MyComponent = () => {
             insta:insta,
             others:otherSite
         }
-      axios.post('https://oscode-backend-service.onrender.com/sendInfo',data).then((response)=>{
+      console.log(studId);
+      axios.put(`http://localhost:3000/update/${studId}`,data).then((response)=>{
       console.log(response);
       setPhone("");
       setBio("");
@@ -56,7 +69,6 @@ const MyComponent = () => {
       setSpecz("");
       setProjects("");
       setSelectedValue("");
-      AsyncStorage.setItem('AuthToken',token);
       navigation.navigate("Main");
     })
     .catch((error)=>{
@@ -236,6 +248,13 @@ const MyComponent = () => {
             <DateTimePicker testID='dateTimePicker' value={date} mode={'date'} is24Hour={true} display='default' onChange={onChange} />
         )
     } */}
+        <Pressable onPress={()=>{
+          navigation.navigate('Main')
+        }}>
+              <View style={{width:90,height:40,top:20,borderRadius:5,borderWidth:1,borderColor:'blue',justifyContent:'center',alignItems:'center',marginBottom:100}}>
+                  <Text style={{fontStyle:'bold',color:'#04c8ff'}}>SKIP</Text>
+              </View>
+            </Pressable>
     </ScrollView>
     </View>
 
@@ -245,6 +264,7 @@ const MyComponent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:'white',
     alignItems:'center'
   },
   dropdown:{

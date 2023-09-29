@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 const studentSchema = new mongoose.Schema({
     name:{
         type:String,
-        unique:true,
+        unique:false,
         required:true,
     },
     email:{
         type:String,
-        required:true,
-        unique:true
+        required:false,
+        unique:false
     },
     phone:{
         type:String,
@@ -17,22 +17,22 @@ const studentSchema = new mongoose.Schema({
     },
     course:{
         type:String,
-        required:true,
+        required:false,
         unique:false
     }, 
     specialization:{
         type:String,
-        required:true,
+        required:false,
         unique:false
     },
     collegeName:{
         type:String,
-        required:true,
+        required:false,
         unique:false
     },
     year:{
         type:String,
-        required:true,
+        required:false,
         unique:false
     },
     projects:{

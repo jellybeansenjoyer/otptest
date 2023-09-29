@@ -23,19 +23,6 @@ const MyComponent = () => {
     function BottomTabs(){
       return (
         <Tab.Navigator>
-          <Tab.Screen name="Feed"   
-                      component={FeedScreen}
-                      options = {{
-                      tabBarLabel:"Feed",
-                      tabBarLabelStyle:{color:"black"},
-                      headerShown:false,
-                      tabBarIcon:({focused})=> focused ? (
-<MaterialCommunityIcons name="lightning-bolt" size={24} color="black" />
-) : (
-<MaterialCommunityIcons name="lightning-bolt-outline" size={24} color="black" />
-                        )
-                    }}
-                      />
           <Tab.Screen name="Events"   
                       component={EventScreen}
                       options = {{
@@ -49,6 +36,20 @@ const MyComponent = () => {
                                   )
                     }}
                       />
+          <Tab.Screen name="Feed"   
+                      component={FeedScreen}
+                      options = {{
+                      tabBarLabel:"Feed",
+                      tabBarLabelStyle:{color:"black"},
+                      headerShown:false,
+                      tabBarIcon:({focused})=> focused ? (
+<MaterialCommunityIcons name="lightning-bolt" size={24} color="black" />
+) : (
+<MaterialCommunityIcons name="lightning-bolt-outline" size={24} color="black" />
+                        )
+                    }}
+                      />
+          
           <Tab.Screen name="Talks"   
                       component={TalksScreen}
                       options = {{
@@ -80,12 +81,15 @@ const MyComponent = () => {
     return (
         <NavigationContainer>
         <Stack.Navigator>
-
         <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
+
         <Stack.Screen name="Main" component={BottomTabs} options={{headerShown:false}}/>
 
 
         <Stack.Screen name="Info" component={InfoScreen} options={{headerShown:false}}/>
+
+
+
 
 
         <Stack.Screen name="otp" component={OtpScreen} options={{headerShown:false}}/>

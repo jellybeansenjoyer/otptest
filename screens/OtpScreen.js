@@ -1,13 +1,15 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import { View, Text, StyleSheet,Pressable,TextInput ,TouchableOpacity} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import {StudentType} from '../studentContext';
+import jwt_decode from 'jwt-decode';
 
 const MyComponent = ({route}) => {
+    const {studId,setStudId} = useContext(StudentType);
     const [myOtp,setMyOtp] = useState(['','','','']);
     const navigation = useNavigation();
     const {data} = route.params;    
@@ -25,12 +27,32 @@ const MyComponent = ({route}) => {
         axios.post('https://oscode-backend-service.onrender.com/verify',otpdata).then((response)=>{
 
             if(response.data.verified===true){
+                console.log(response.data.token);
                 if(response.data.token!==undefined){
                     const token = response.data.token;
                     AsyncStorage.setItem('AuthToken',token);
-                    navigation.navigate('Main');
-                }else
-                    navigation.navigate('Info');
+                    if(data.screen==='Login')
+                        navigation.navigate('Main');
+                    else{
+                        
+                    }
+                }else{
+                    const dataToSend = {
+                        name:data.username,
+                        phone:data.number,
+                    }
+                    axios.post('http://localhost:3000/sendInfo',dataToSend).then((response)=>{
+                        const decodedToken = jwt_decode(response.data.token);
+                        const userId = decodedToken.studentId;
+                        console.log(userId);
+                        setStudId(userId);
+                          AsyncStorage.setItem('AuthToken',response.data.token);
+                        navigation.navigate('Info');
+
+                    }).catch((err)=>{
+                        console.log(err);
+                    })
+                }
             }else{
                 console.log('incorrect otp');
             }
@@ -56,7 +78,8 @@ const MyComponent = ({route}) => {
               });
           }else{
             axios.post('https://oscode-backend-service.onrender.com/login',otpData).then((response)=>{
-          console.log(response);
+            setStudId(response.data._id);
+            console.log(response.data);
         })
         .catch((error)=>{
           console.log("error",error);
@@ -162,6 +185,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop:20,
     flex: 1,
+    backgroundColor:'white'
   },
   textbox:{
     textAlign:'center',

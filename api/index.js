@@ -37,14 +37,14 @@ let OTP,user;
 
 app.post('/sendInfo',async(req,res)=>{
     try{
-        const {name,email,phone,collegeName,year,course,specialization,projects,bio,linkedIn,github,insta,others} = req.body;
+        const {name,phone} = req.body;
         const existingStudent = await Student.findOne({phone});
         if(existingStudent){
             res.status(400).json({message:"Phone already exists, Info send fails"});
         }
         const secretKey = generateSecretKey();
 
-        const newStudent = new Student({name,email,phone,collegeName,year,course,specialization,projects,bio,linkedIn,github,insta,others});
+        const newStudent = new Student({name,phone,email:"",course:"",specialization:"",collegeName:"",year:"",projects:"",bio:"",linkedIn:"",github:"",insta:"",others:""});
         await newStudent.save();
         const token = jwt.sign({studentId:newStudent._id},secretKey);
 
@@ -59,7 +59,7 @@ app.post('/login',async(req,res)=>{
         const {number} = req.body;
         const existingUser = await Student.findOne( {phone:number });
         if(!existingUser){
-            return res.status(400).json({message:"User with the same number already exists"});
+            return res.status(400).json({message:"User with the number does'nt exists, signup"});
         }
 
         
@@ -279,6 +279,26 @@ app.post('/events', async (req, res) => {
     } catch (error) {
       console.error('Error fetching YouTube entries:', error);
       res.status(500).json({ error: 'Failed to fetch YouTube entries' });
+    }
+  });
+
+  app.put('/update/:id', async (req, res) => {
+    const { id } = req.params; 
+    const updatedData = req.body; 
+  
+    try {
+      const updatedStudent = await Student.findByIdAndUpdate(id, updatedData, {
+        new: true,
+      });
+  
+      if (updatedStudent) {
+        res.json({ message: 'Student updated successfully', updatedStudent });
+      } else {
+        res.status(404).json({ message: 'Student not found' });
+      }
+    } catch (error) {
+      console.error('Error updating student:', error);
+      res.status(500).json({ message: 'Internal server error' });
     }
   });
 

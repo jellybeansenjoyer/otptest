@@ -19,7 +19,8 @@ const MyComponent = () => {
       };
       const sendData = {
         number:number,
-        screen:"Register"        
+        screen:"Register",
+        username:username        
     };
       axios.post('https://oscode-backend-service.onrender.com/signup',otpData).then((response)=>{
       console.log(response);
@@ -53,7 +54,7 @@ const MyComponent = () => {
         <Ionicons name="chevron-back" size={24} color="black" />
         </Pressable>
         <View style = {{justifyContent:'center', alignItems:'center'}}>
-        <Image source={'https://www.oscode.co.in/assets/img/logo.webp'} style={{marginTop:10 ,width:200,height:200}}>
+        <Image source={require('../oscode.png')} style={{marginTop:60 ,width:200,height:200}}>
             </Image>
             <Text style={{marginTop:10,fontSize:25,fontWeight:'bold',color:'black'}}>
                 SIGN UP
@@ -64,30 +65,31 @@ const MyComponent = () => {
             <TextInput
         style={styles.input}
         onChangeText={(text)=>{
+            setUsername(text);
+        }}
+        value={username}
+        placeholder="Name"
+      />
+            <TextInput
+        style={styles.input}
+        onChangeText={(text)=>{
             setNumber(text);
         }}
         value={number}
         placeholder="Enter phone here"
       />
-      <TextInput
-        style={styles.input}
-        onChangeText={(text)=>{
-            setUsername(text);
-        }}
-        value={username}
-        placeholder="Username"
-      />
-      <TextInput
+       
+      {/*<TextInput
         style={styles.input}
         onChangeText={(text)=>{
             setPassword(text);
         }}
         value={password}
         placeholder="Password"
-      />
+      /> */}
         </View>
       <View style={{justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
-      <TouchableOpacity onPress={handleSignUp}style={{width:300,height:50,marginTop:100,justifyContent:'center',backgroundColor:'black',alignItems:'center',borderRadius:50}}>
+      <TouchableOpacity onPress={handleSignUp}style={{width:300,height:50,marginTop:20,justifyContent:'center',backgroundColor:'black',alignItems:'center',borderRadius:50}}>
           <Text style={{color:'white',fontSize:14,fontWeight:'bold'}}>
               Sign up
           </Text>
@@ -106,7 +108,8 @@ const MyComponent = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor:'white'
   },
   input:{
     borderColor: 'gray',
