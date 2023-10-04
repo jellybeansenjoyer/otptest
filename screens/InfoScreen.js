@@ -51,7 +51,7 @@ const MyComponent = () => {
             others:otherSite
         }
       console.log(studId);
-      axios.put(`http://localhost:3000/update/${studId}`,data).then((response)=>{
+      axios.put(`https://oscode-backend-service.onrender.com/update/${studId}`,data).then((response)=>{
       console.log(response);
       setPhone("");
       setBio("");

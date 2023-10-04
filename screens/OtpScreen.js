@@ -24,7 +24,7 @@ const MyComponent = ({route}) => {
             number:data.number
         };
         try{
-        axios.post('http://localhost:3000/verify',otpdata).then((response)=>{
+        axios.post('https://oscode-backend-service.onrender.com/verify',otpdata).then((response)=>{
 
             if(response.data.verified===true){
                 console.log(response.data.token);
@@ -185,7 +185,6 @@ const styles = StyleSheet.create({
   container: {
     marginTop:20,
     flex: 1,
-    backgroundColor:'white'
   },
   textbox:{
     textAlign:'center',

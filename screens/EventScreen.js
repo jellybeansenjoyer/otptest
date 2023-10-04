@@ -1,14 +1,31 @@
 import React, { useEffect ,useState } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet,BackHandler } from 'react-native';
 import Card from '../components/Card';
 import axios from 'axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 const MyComponent = () => {
+  const navigation = useNavigation();  
+  const handleBackButton = () => {
+    navigation.goBack();
+    navigation.goBack();
+    // navigation.goBack();
+    return true; 
+  };
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+  
+    return () => {
+      backHandler.remove();
+    };
+  }, []);
   const [events,setEvents] = useState([]); 
   useEffect(()=>{
     const fetchData = ()=>{
-      axios.get('http://localhost:3000/events').then((response)=>{
-          setEvents(response.data);
+      axios.get('https://oscode-backend-service.onrender.com/events').then((response)=>{
+        const newData = response.data;
+        newData.reverse();  
+        setEvents(newData);
       }).catch((err)=>{
         console.log(err);
       })
