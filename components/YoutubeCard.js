@@ -6,6 +6,7 @@ const Card = ({ name, image , description , url}) => {
           Linking.canOpenURL(youtubeURL)
             .then((supported) => {
               if (supported) {
+                console.log('Can open YouTube URL');
                 Linking.openURL(youtubeURL);
               } else {
                 console.log('Cannot open YouTube URL');
@@ -16,16 +17,16 @@ const Card = ({ name, image , description , url}) => {
             });
         };
   return (
-
+    <Pressable onPress={openYouTubeURL}>
     <View style={styles.card}>
-    <Pressable onClick={openYouTubeURL}>
       <Image source={{ uri: image }} style={styles.cardImage} />
       <View style={styles.cardContent}>
         <Text style={styles.cardTitle}>{name}</Text>
         <Text style={styles.cardDescription}>{description}</Text> 
       </View>
-      </Pressable>
     </View>
+    </Pressable>
+
   );
 };
 

@@ -4,8 +4,9 @@ import Card from '../components/Card';
 import axios from 'axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+
 const MyComponent = () => {
-  const navigation = useNavigation();  
+  const navigation = useNavigation(); 
   const handleBackButton = () => {
     navigation.goBack();
     navigation.goBack();
@@ -34,7 +35,7 @@ const MyComponent = () => {
   },[]);
  console.log("events",events);
   const renderItem = ({ item }) => (
-    <Card name={item.name} image={item.image} people={item.people} active={item.active} address={item.address} date={item.date}  />
+    <Card name={item.name} image={item.image} people={item.people} active={item.active} address={item.address} date={item.date} registrations={item.registrations}  />
   );
   return (
     <SafeAreaView style={styles.container}>
@@ -43,7 +44,7 @@ const MyComponent = () => {
       <FlatList
         style={{marginTop:10}}
         data={events}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.name}
         renderItem={renderItem}
       />
     </SafeAreaView>

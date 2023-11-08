@@ -29,6 +29,11 @@ const eventSchema = new mongoose.Schema({
         type:String,
         required:false,
         unique:false
+    },
+    registrations:{
+        type:[String],
+        required:false,
+        unique:false
     }
 });
 

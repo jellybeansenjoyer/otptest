@@ -302,6 +302,30 @@ app.post('/events', async (req, res) => {
     }
   });
 
+app.put('/events/:eventId/register', async (req, res) => {
+  const eventId = req.params.eventId;
+  const newUserId = req.body.userId;
+
+  try {
+    // Find the event by ID
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    // Append the newUserId to the registrations array
+    event.registrations.push(newUserId);
+
+    // Save the updated event
+    const updatedEvent = await event.save();
+
+    res.json({ message: 'User registered successfully', event: updatedEvent });
+  } catch (error) {
+    res.status(500).json({ message: 'Error registering user', error: error.message });
+  }
+});
+
 app.listen(port,()=>{
     console.log(`server is running on port ${port}`);
 });

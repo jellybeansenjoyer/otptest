@@ -19,7 +19,7 @@ const MyComponent = () => {
   },[]);
  console.log("events",videos);
   const renderItem = ({ item }) => (
-    <YoutubeCard name={item.name} image={item.image} description={item.description} url={item.url}  />
+    <YoutubeCard  name={item.name} image={item.image} description={item.description} url={item.url}  />
   );
   return (
     <SafeAreaView style={styles.container}>
