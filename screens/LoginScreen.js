@@ -32,15 +32,20 @@ const MyComponent = () => {
           number:number,
           screen:"Login"
       }
-      axios.post('https://oscode-backend-service.onrender.com/login',otpData).then((response)=>{
+      axios.post('http://localhost:3000/login',otpData).then((response)=>{
       console.log(response);
       setNumber("");
       setUserName("");
       setPassword("");
+      setErrorMessage('');
       navigation.navigate("otp",{data:sendData});
     })
     .catch((error)=>{
       showAlert();
+      switch(error.response.status){
+        case 400: setErrorMessage(error.response.data.message);
+        case 500: setErrorMessage(error.response.data.message)
+      }
       console.log("error",error);
     })
     }catch(err){
@@ -50,6 +55,7 @@ const MyComponent = () => {
     const [number,setNumber] = useState('');
     const [username,setUserName] = useState('');
     const [password,setPassword] = useState('');
+    const [errorMessage,setErrorMessage] = useState('');
     const showAlert = () => {
       Alert.alert(
         'Login Failed',
@@ -106,11 +112,15 @@ const MyComponent = () => {
               Log in
           </Text>
       </TouchableOpacity>
+      <View>
+        <Text style={{color:'red',fontWeight:'bold',margin:10}}>{errorMessage===''?'':errorMessage}</Text>
+      </View>
       <View style={{flexDirection:'row',gap:4,marginTop:10}}>
       <Text style={{fontWeight:'bold'}}>Already Have An Account?</Text>
         <Pressable onPress={()=>{navigation.navigate('Register');}}>
         <Text style={{color:'#04c8ff',fontWeight:'bold'}}>Sign up</Text>
         </Pressable>
+        
       </View>
       
       </View>

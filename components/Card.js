@@ -15,7 +15,7 @@ import {StudentType} from '../studentContext';
 //     return `${day}/${month}/${year}`;
 //   }
 
-const Card = ({ name, image , people, active, address,date ,registrations }) => {
+const Card = ({ id,name, image , people, active, address,date ,registrations }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const {studId,setStudId} = useContext(StudentType);
   useEffect(()=>{
@@ -38,7 +38,7 @@ const Card = ({ name, image , people, active, address,date ,registrations }) => 
     setIsModalVisible(false);
   };
   const registerUser=()=>{
-    axios.put(`http://localhost:3000/events/${eventId}/register`, { userId: studId })
+    axios.put(`https://oscode-backend-service.onrender.com/events/${id}/register`, { userId: studId })
     .then(response => {
       console.log('User registered successfully:', response.data);
     })
@@ -103,9 +103,8 @@ const formattedDate = formatDateToDDMMYYYY(new Date(date));
         placeholder="College"
         value={college}
       />
-       <TouchableOpacity onPress={registerUser}style={{width:300,height:50,marginTop:20,justifyContent:'center',backgroundColor:'black',alignItems:'center',borderRadius:50}}>
-          <Text style={{color:'white',fontSize:14,fontWeight:'bold'}}>
-              CONFIRM & REGISTER
+       <TouchableOpacity disabled={registrations.includes(studId)?true:false} onPress={registerUser}style={{width:300,height:50,marginTop:20,justifyContent:'center',backgroundColor:'black',alignItems:'center',borderRadius:50}}>
+          <Text style={{color:'white',fontSize:14,fontWeight:'bold'}}>{registrations.includes(studId)?'USER ALREADY REGISTERED':'CONFIRM & REGISTER'}  
           </Text>
       </TouchableOpacity>
               <TouchableOpacity onPress={closeModal}>
@@ -115,7 +114,7 @@ const formattedDate = formatDateToDDMMYYYY(new Date(date));
           </View>
         </Modal>
         <View style={{ flexDirection:'row' , justifyContent:'flex-end'}}>
-          <Text style={{fontWeight:'bold'}}>REGISTER</Text>
+          <Text style={{fontWeight:'bold'}}>{registrations.includes(studId)?'REGISTERED':'REGISTER'}</Text>
         </View>
         </Pressable>
       </View>

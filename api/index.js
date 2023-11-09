@@ -8,7 +8,7 @@ const Student = require('./models/student.js');
 const Event = require('./models/event.js');
 const yt = require('./models/yt');
 const accountSid = 'AC4bc5962457645eeb1f150b9fd8e08a11';
-const authToken = 'daa32fc1c28fef149054c1468b648580';
+const authToken = '13b2d6bdf96d310f44517dc8ca167b06';
 const client = twilio(accountSid,authToken);
 
 const app = express();
@@ -58,6 +58,7 @@ app.post('/login',async(req,res)=>{
     try{
         const {number} = req.body;
         const existingUser = await Student.findOne( {phone:number });
+        console.log(number);
         if(!existingUser){
             return res.status(400).json({message:"User with the number does'nt exists, signup"});
         }

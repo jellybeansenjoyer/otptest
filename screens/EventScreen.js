@@ -35,7 +35,7 @@ const MyComponent = () => {
   },[]);
  console.log("events",events);
   const renderItem = ({ item }) => (
-    <Card name={item.name} image={item.image} people={item.people} active={item.active} address={item.address} date={item.date} registrations={item.registrations}  />
+    <Card id = {item._id} name={item.name} image={item.image} people={item.people} active={item.active} address={item.address} date={item.date} registrations={item.registrations}  />
   );
   return (
     <SafeAreaView style={styles.container}>
