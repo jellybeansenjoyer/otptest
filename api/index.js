@@ -124,7 +124,7 @@ app.post('/signup',async(req,res)=>{
         
         setTimeout(() => {
             otp.deleteOne({ number }).exec(); // Delete the OTP document
-          }, 120*1000);
+          }, 300*1000);
 
         await client.messages.create({
             body:`your otp verification for user ${number} is ${OTP}`,

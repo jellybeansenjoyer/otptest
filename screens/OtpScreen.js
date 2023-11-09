@@ -25,7 +25,7 @@ const MyComponent = ({route}) => {
             number:data.number
         };
         try{
-        axios.post('http://localhost:3000/verify',otpdata).then((response)=>{
+        axios.post('https://oscode-backend-service.onrender.com/verify',otpdata).then((response)=>{
 
             if(response.data.verified===true){
                 console.log(response.data.token);
@@ -171,7 +171,7 @@ alignItems: 'center'}} >
     <View style={{marginTop:40,alignItems:'center',justifyContent:'center'}}>
         <Text style={{fontWeight:'bold'}}>Did'nt get it? <Pressable onPress={()=>{
             handleSignUp()
-            setTimeInSeconds(120);
+            setTimeInSeconds(300);
             }} disabled={timeInSeconds===0?false:true}><Text style={{color:timeInSeconds===0?'#04c8ff':'gray'}}>Resend</Text>
             </Pressable>
         </Text>
