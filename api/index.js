@@ -159,7 +159,7 @@ app.post('/verify',async(req,res)=>{
             return res.status(200).json({message:"user verified successfully",verified:true,token:undefined});
 
         }else{
-            await otp.findOneAndDelete({ number:number });
+            // await otp.findOneAndDelete({ number:number });
             return res.status(400).json({message:"invalid otp",verified:false,token:undefined});
         }
     }catch(err){

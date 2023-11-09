@@ -9,6 +9,7 @@ import {StudentType} from '../studentContext';
 import jwt_decode from 'jwt-decode';
 
 const MyComponent = ({route}) => {
+    const [error,setError] = useState('');
     const {studId,setStudId} = useContext(StudentType);
     const [myOtp,setMyOtp] = useState(['','','','']);
     const navigation = useNavigation();
@@ -24,7 +25,7 @@ const MyComponent = ({route}) => {
             number:data.number
         };
         try{
-        axios.post('https://oscode-backend-service.onrender.com/verify',otpdata).then((response)=>{
+        axios.post('http://localhost:3000/verify',otpdata).then((response)=>{
 
             if(response.data.verified===true){
                 console.log(response.data.token);
@@ -41,7 +42,7 @@ const MyComponent = ({route}) => {
                         name:data.username,
                         phone:data.number,
                     }
-                    axios.post('http://localhost:3000/sendInfo',dataToSend).then((response)=>{
+                    axios.post('https://oscode-backend-service.onrender.com/sendInfo',dataToSend).then((response)=>{
                         const decodedToken = jwt_decode(response.data.token);
                         const userId = decodedToken.studentId;
                         console.log(userId);
@@ -57,7 +58,7 @@ const MyComponent = ({route}) => {
                 console.log('incorrect otp');
             }
         }).catch((err)=>{
-            
+            setError(err.response.data.message)
             console.log(err);
         })
         }catch(err){
@@ -70,14 +71,14 @@ const MyComponent = ({route}) => {
               number:data.number        
           };
           if(data.screen!=='Login'){
-            axios.post('http://localhost:3000/signup',otpData).then((response)=>{
+            axios.post('https://oscode-backend-service.onrender.com/signup',otpData).then((response)=>{
                 console.log(response);
               })
               .catch((error)=>{
                 console.log("error",error);
               });
           }else{
-            axios.post('http://localhost:3000/login',otpData).then((response)=>{
+            axios.post('https://oscode-backend-service.onrender.com/login',otpData).then((response)=>{
             setStudId(response.data._id);
             console.log(response.data);
         })
@@ -112,7 +113,7 @@ const MyComponent = ({route}) => {
     return (
     <SafeAreaView style={styles.container}>
     <Pressable onPress={()=>{
-        navigation.navigate('Register');
+        navigation.navigate('Login');
     }}style = {
 {width: 40,
 height: 40,
@@ -176,7 +177,9 @@ alignItems: 'center'}} >
         </Text>
         
     <Text style={{color:'black'}}>{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}</Text>
+    <Text style={{color:'red',textWeight:'bold'}}>{error===''?'':error}</Text>
     </View>
+
     </SafeAreaView>
   );
 };
