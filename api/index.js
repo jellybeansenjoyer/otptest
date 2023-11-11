@@ -44,7 +44,7 @@ app.post('/sendInfo',async(req,res)=>{
         }
         const secretKey = generateSecretKey();
 
-        const newStudent = new Student({name,phone,email:"",course:"",specialization:"",collegeName:"",year:"",projects:"",bio:"",linkedIn:"",github:"",insta:"",others:""});
+        const newStudent = new Student({name,phone,email:"",course:"",specialization:"",collegeName:"",year:"",projects:"",bio:"",linkedIn:"",github:"",insta:"",others:"",verified:false});
         await newStudent.save();
         const token = jwt.sign({studentId:newStudent._id},secretKey);
 

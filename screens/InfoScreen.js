@@ -48,7 +48,8 @@ const MyComponent = () => {
             linkedIn:linkedIn,
             github:github,
             insta:insta,
-            others:otherSite
+            others:otherSite,
+            verified:true
         }
       console.log(studId);
       axios.put(`https://oscode-backend-service.onrender.com/update/${studId}`,data).then((response)=>{

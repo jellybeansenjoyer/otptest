@@ -65,6 +65,11 @@ const studentSchema = new mongoose.Schema({
         required:false,
         unique:false
     },
+    verified:{
+        type:Boolean,
+        required:false,
+        unique:false
+    }
 });
 
 const Student = mongoose.model("Student",studentSchema);

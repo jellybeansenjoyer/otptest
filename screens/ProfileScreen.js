@@ -40,6 +40,9 @@ const MyComponent = () => {
     removeData("AuthToken");
     navigation.navigate("Login");
   }
+  const handleUpdate = ()=>{
+    navigation.navigate('Info')
+  }
   const updateBio = (userId)=>{
     const data = {
       "bio":bio
@@ -128,12 +131,19 @@ const MyComponent = () => {
               <TouchableOpacity style={{marginTop:5,justifyContent:'center',alignItems:'center',width:'100%',alignSelf:'center',height:40,borderRadius:10,borderWidth:1,borderColor:'gray'}}>
                 <Text style={{fontStyle:'bold'}}>+ADD PROJECT</Text>
               </TouchableOpacity>
-              
+              <View style={{flexDirection:'row',justifyContent:'flex start',gap:5}}>
               <Pressable onPress={handleLogout}>
               <View style={{width:90,height:40,top:20,borderRadius:5,borderWidth:1,borderColor:'red',justifyContent:'center',alignItems:'center',marginBottom:100}}>
                   <Text style={{fontStyle:'bold',color:'red'}}>LOG OUT</Text>
               </View>
             </Pressable>
+
+            <Pressable onPress={handleUpdate}>
+              <View style={{width:120,height:40,top:20,borderRadius:5,borderWidth:1,borderColor:'blue',justifyContent:'center',alignItems:'center',marginBottom:100}}>
+                  <Text style={{fontStyle:'bold',color:'blue'}}>UPDATE DETAILS</Text>
+              </View>
+            </Pressable>
+            </View>
           </View> 
            </ScrollView>)}
       </SafeAreaView>

@@ -92,7 +92,7 @@ const MyComponent = ({route}) => {
         }
       };
 
-  const [timeInSeconds, setTimeInSeconds] = useState(120);
+  const [timeInSeconds, setTimeInSeconds] = useState(300);
   
   useEffect(() => {
     

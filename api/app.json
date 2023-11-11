@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "722a0c3a-3895-4fb6-94ae-a22220c5977a"
+      }
+    },
+    "android": {
+      "package": "com.raghavk266.api"
+    }
+  }
+}

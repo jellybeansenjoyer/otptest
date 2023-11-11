@@ -18,6 +18,7 @@ import {StudentType} from '../studentContext';
 const Card = ({ id,name, image , people, active, address,date ,registrations }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const {studId,setStudId} = useContext(StudentType);
+  const [apply,setApply] = useState(true)
   useEffect(()=>{
     const fetchUsers = async ()=>{
         const token = await AsyncStorage.getItem("AuthToken");
@@ -25,9 +26,27 @@ const Card = ({ id,name, image , people, active, address,date ,registrations }) 
         const userId = decodedToken.studentId;
         console.log(userId);
         setStudId(userId);
+        axios.get(`https://oscode-backend-service.onrender.com/users/${userId}`).then((response)=>{
+          if(response.data.verified===false)  
+            setApply(false);
+        }).catch((err)=>{
+          console.log(err);
+        })
+        
     }
     fetchUsers();
   },[]);
+  // useEffect(()=>{
+  //   const getUserData = (userId)=>{
+  //       axios.get(`https://oscode-backend-service.onrender.com/users/${userId}`).then((response)=>{
+  //         if(response.data.verified===false)  
+  //           setApply(false);
+  //       }).catch((err)=>{
+  //         console.log(err);
+  //       })
+  //   }
+  //   getUserData(studId);
+  // },[]);
   const [studentname,setStudentName] = useState("");
   const [college,setCollegeName] = useState("");
   const openModal = () => {
@@ -82,7 +101,7 @@ const formattedDate = formatDateToDDMMYYYY(new Date(date));
             <Octicons name="people" size={24} color="black" style={{marginTop:5}}/>
             <Text style={styles.cardDescription}>{registrations.length}</Text> 
         </View>
-        <Pressable onPress={openModal}>
+        <Pressable disabled={registrations.includes(studId)&&apply} onPress={openModal}>
         <Modal animationType="slide" transparent={true} visible={isModalVisible} onRequestClose={closeModal}>
         <View style={styles.centeredView}>
             <View style={styles.modalView}>
@@ -103,7 +122,7 @@ const formattedDate = formatDateToDDMMYYYY(new Date(date));
         placeholder="College"
         value={college}
       />
-       <TouchableOpacity disabled={registrations.includes(studId)?true:false} onPress={registerUser}style={{width:300,height:50,marginTop:20,justifyContent:'center',backgroundColor:'black',alignItems:'center',borderRadius:50}}>
+       <TouchableOpacity disabled={apply&&registrations.includes(studId)?true:false} onPress={registerUser}style={{width:300,height:50,marginTop:20,justifyContent:'center',backgroundColor:'black',alignItems:'center',borderRadius:50}}>
           <Text style={{color:'white',fontSize:14,fontWeight:'bold'}}>{registrations.includes(studId)?'USER ALREADY REGISTERED':'CONFIRM & REGISTER'}  
           </Text>
       </TouchableOpacity>
@@ -114,7 +133,7 @@ const formattedDate = formatDateToDDMMYYYY(new Date(date));
           </View>
         </Modal>
         <View style={{ flexDirection:'row' , justifyContent:'flex-end'}}>
-          <Text style={{fontWeight:'bold'}}>{registrations.includes(studId)?'REGISTERED':'REGISTER'}</Text>
+          <Text style={{fontWeight:'bold'}}>{apply?registrations.includes(studId)?'REGISTERED':'REGISTER':"COMPLETE REGISTRATION"}</Text>
         </View>
         </Pressable>
       </View>
